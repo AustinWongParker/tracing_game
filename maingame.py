@@ -43,11 +43,26 @@ class animated_cloud(object):
         self.image = pygame.image.load('cloud.png')
         self.image = pygame.transform.scale(self.image, (400, 300))
         self.rect = self.image.get_rect()
+        # cloud's current position
         self.x = 210 # x and y hardcoded for center of screen // fix?
         self.y = 135
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
+
+    # manual movement of cloud
+    def handle_keys(self):
+        """ Handles Keys """
+        key = pygame.key.get_pressed()
+        dist = 10 # distance moved in 1 frame, try changing it to 5
+        if key[pygame.K_DOWN]: # down key
+            self.y += dist # move down
+        elif key[pygame.K_UP]: # up key
+            self.y -= dist # move up
+        if key[pygame.K_RIGHT]: # right key
+            self.x += dist # move right
+        elif key[pygame.K_LEFT]: # left key
+            self.x -= dist # move left
 
 
 
@@ -99,6 +114,7 @@ while True:
             pygame.quit()
             sys.exit()
         screen.blit(Background, (0,0))
+        #cloud_animated.handle_keys()
         cloud_animated.draw(screen)
         pygame.display.update() # draws the surface object to the screen/window
         fpsClock.tick(FPS)
