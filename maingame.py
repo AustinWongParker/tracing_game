@@ -47,20 +47,6 @@ class animated_cloud(object):
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
 
-    # manual movement of cloud
-    def handle_keys(self):
-        """ Handles Keys """
-        key = pygame.key.get_pressed()
-        dist = 10 # distance moved in 1 frame, try changing it to 5
-        if key[pygame.K_DOWN]: # down key
-            self.y += dist # move down
-        elif key[pygame.K_UP]: # up key
-            self.y -= dist # move up
-        if key[pygame.K_RIGHT]: # right key
-            self.x += dist # move right
-        elif key[pygame.K_LEFT]: # left key
-            self.x -= dist # move left
-
 class animated_press_any_key(object):
     def __init__(self): #constructor
         self.image = pygame.image.load('anykey.png')
@@ -72,34 +58,6 @@ class animated_press_any_key(object):
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
 
-'''
-    def bobbing(self):
-        direction = 'down'
-        if direction == 'down':
-            self.y += 1
-            if self.y == -1:
-                direction = 'up'
-        if direction == 'up':
-            self.y -= 1
-            if self.y == 120:
-                direction = 'down'
-        screen.blit(self.image, (self.x, self.y))
-
-        while True:
-            direction = 'up'
-            if direction == 'up':
-                self.y -= 10
-                if self.y == 120:
-                    direction = 'down'
-
-            elif direction == 'down':
-                self.y += 1
-                if self.x == 150:
-                    direction = 'up'
-                    pygame.event.wait()
-'''
-
-
 Background = pygame.image.load('sky.jpeg')
 Background = pygame.transform.scale(Background, (800, 600))
 cloud_animated = animated_cloud()
@@ -107,7 +65,7 @@ clock = pygame.time.Clock()
 any_key = animated_press_any_key()
 
 direction = 'down' # initial starting direction
-
+pygame.time.set_timer(pygame.USEREVENT, 50) # generates events for the cloud
 
 
 ###########################################################
@@ -138,14 +96,9 @@ while True:
             any_key.y -= 1
             if cloud_animated.y == top:
                 direction = 'down'
-
         pygame.display.update() # draws the surface object to the screen/window
-
-        #screen.blit(cloud_animated.image, (cloud_animated.x, cloud_animated.y))
-
         fpsClock.tick(FPS)
 
         # TO-DO: sky transition into tracing game background???
 
-
-        # Main Tracing game
+        # Main Tracing game -- maybe break up into separate files?
