@@ -99,12 +99,14 @@ class animated_press_any_key(object):
                     pygame.event.wait()
 '''
 
-# Creating sky image for start menu
+
 Background = pygame.image.load('sky.jpeg')
 Background = pygame.transform.scale(Background, (800, 600))
 cloud_animated = animated_cloud()
 clock = pygame.time.Clock()
 any_key = animated_press_any_key()
+
+direction = 'down' # initial starting direction
 
 
 
@@ -117,13 +119,33 @@ while True:
         if event.type == QUIT: # checks for QUIT in the event type
             pygame.quit()
             sys.exit()
+
+        # Start Screen w/ cloud and press any key to continue.
+        # ----------------------------------------------------
         screen.blit(Background, (0,0))
         #cloud_animated.handle_keys()   # uncomment to use manual movement with arrow keys
         cloud_animated.draw(screen)
         any_key.draw(screen)
+        top = 100
+        bottom = 150
+        if direction == 'down':
+            cloud_animated.y += 1
+            any_key.y += 1
+            if cloud_animated.y == bottom:
+                direction = 'up'
+        elif direction == 'up':
+            cloud_animated.y -= 1
+            any_key.y -= 1
+            if cloud_animated.y == top:
+                direction = 'down'
+
         pygame.display.update() # draws the surface object to the screen/window
-        top = 150
-        bottom = 100
-        cloud_animated.y += 1
-        any_key.y += 1
+
+        #screen.blit(cloud_animated.image, (cloud_animated.x, cloud_animated.y))
+
         fpsClock.tick(FPS)
+
+        # TO-DO: sky transition into tracing game background???
+
+
+        # Main Tracing game
