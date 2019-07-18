@@ -22,9 +22,6 @@ TO-DO:
     c. animated drawing that will be slow enough for the user to see
         - last ~ 3 seconds after drawing is complete then disappear
 
-
-
-
 '''
 
 import pygame, sys
@@ -64,7 +61,16 @@ class animated_cloud(object):
         elif key[pygame.K_LEFT]: # left key
             self.x -= dist # move left
 
+class animated_press_any_key(object):
+    def __init__(self): #constructor
+        self.image = pygame.image.load('anykey.png')
+        self.image = pygame.transform.scale(self.image, (415, 150))
+        self.rect = self.image.get_rect()
+        self.x = 220
+        self.y = 280
 
+    def draw(self, surface):
+        surface.blit(self.image, (self.x, self.y))
 
 '''
     def bobbing(self):
@@ -78,10 +84,6 @@ class animated_cloud(object):
             if self.y == 120:
                 direction = 'down'
         screen.blit(self.image, (self.x, self.y))
-
-
-
-
 
         while True:
             direction = 'up'
@@ -102,6 +104,8 @@ Background = pygame.image.load('sky.jpeg')
 Background = pygame.transform.scale(Background, (800, 600))
 cloud_animated = animated_cloud()
 clock = pygame.time.Clock()
+any_key = animated_press_any_key()
+
 
 
 ###########################################################
@@ -114,7 +118,12 @@ while True:
             pygame.quit()
             sys.exit()
         screen.blit(Background, (0,0))
-        #cloud_animated.handle_keys()
+        #cloud_animated.handle_keys()   # uncomment to use manual movement with arrow keys
         cloud_animated.draw(screen)
+        any_key.draw(screen)
         pygame.display.update() # draws the surface object to the screen/window
+        top = 150
+        bottom = 100
+        cloud_animated.y += 1
+        any_key.y += 1
         fpsClock.tick(FPS)
