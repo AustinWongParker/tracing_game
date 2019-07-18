@@ -29,32 +29,76 @@ TO-DO:
 
 import pygame, sys
 from pygame.locals import*
+import time
 
 pygame.init()
 
 screen = pygame.display.set_mode((800, 600)) # display surface
 pygame.display.set_caption('Tracing Game')
+FPS = 30
+fpsClock = pygame.time.Clock()
 
-'''
-class Background(pygame.sprite.Sprite):
-    def __init__(self, image_file, location):
-        pygame.sprite.Sprite.__init__(self) #call Sprite initializer
-        self.image = pygame.image.load(image_file)
+class animated_cloud(object):
+    def __init__(self): # constructor
+        self.image = pygame.image.load('cloud.png')
+        self.image = pygame.transform.scale(self.image, (400, 300))
         self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.x = 210 # x and y hardcoded for center of screen // fix?
+        self.y = 135
+
+    def draw(self, surface):
+        surface.blit(self.image, (self.x, self.y))
+
+
+
+'''
+    def bobbing(self):
+        direction = 'down'
+        if direction == 'down':
+            self.y += 1
+            if self.y == -1:
+                direction = 'up'
+        if direction == 'up':
+            self.y -= 1
+            if self.y == 120:
+                direction = 'down'
+        screen.blit(self.image, (self.x, self.y))
+
+
+
+
+
+        while True:
+            direction = 'up'
+            if direction == 'up':
+                self.y -= 10
+                if self.y == 120:
+                    direction = 'down'
+
+            elif direction == 'down':
+                self.y += 1
+                if self.x == 150:
+                    direction = 'up'
+                    pygame.event.wait()
 '''
 
+# Creating sky image for start menu
 Background = pygame.image.load('sky.jpeg')
 Background = pygame.transform.scale(Background, (800, 600))
-cloud_BG = pygame.image.load('cloud.jpg')
-cloud_BG = pygame.transform.scale(cloud_BG, (400, 300))
+cloud_animated = animated_cloud()
+clock = pygame.time.Clock()
 
-while True: # Game Loop
+
+###########################################################
+#                      GAME LOOP                          #
+###########################################################
+
+while True:
     for event in pygame.event.get(): # list of event objects generated throughout the game
         if event.type == QUIT: # checks for QUIT in the event type
             pygame.quit()
             sys.exit()
-        screen.fill([255, 255, 255])
         screen.blit(Background, (0,0))
-        screen.blit(cloud_BG, (220, 150))
+        cloud_animated.draw(screen)
         pygame.display.update() # draws the surface object to the screen/window
+        fpsClock.tick(FPS)
