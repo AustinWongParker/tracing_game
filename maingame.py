@@ -27,7 +27,7 @@ TO-DO:
 import pygame, sys
 from pygame.locals import*
 import time
-import start_menu as SM
+#import start_menu as SM
 
 pygame.init()
 
@@ -40,6 +40,8 @@ def show_start_menu(self):
     pass
 
 
+beach_background = pygame.image.load('beach.jpg')
+beach_background = pygame.transform.scale(beach_background, (800, 600))
 
 ###########################################################
 #                      GAME LOOP                          #
@@ -51,7 +53,11 @@ def gameLoop():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            SM.start_menu_loop()
+            #SM.start_menu_loop()
+            screen.blit(beach_background, (0,0))
+            pygame.display.update() # draws the surface object to the screen/window
+            fpsClock.tick(FPS)
+
 
 
 gameLoop()

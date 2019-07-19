@@ -1,9 +1,9 @@
 import pygame, sys
 from pygame.locals import*
 import time
+pygame.init()
 
 def start_menu_loop():
-    pygame.init()
 
     screen = pygame.display.set_mode((800, 600)) # display surface
     pygame.display.set_caption('Tracing Game')
@@ -35,8 +35,8 @@ def start_menu_loop():
 
     def press_any_key():
         if event.type == KEYDOWN:
-            pygame.quit()
-            sys.exit()
+            menu_status = False
+            print('test')
 
     Background = pygame.image.load('sky.jpeg')
     Background = pygame.transform.scale(Background, (800, 600))
@@ -47,11 +47,14 @@ def start_menu_loop():
     direction = 'down' # initial starting direction
     pygame.time.set_timer(pygame.USEREVENT, 50) # generates events for the cloud to move
 
-    while True:
+    menu_status = True
+
+    while menu_status:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            press_any_key()
 
             # Start Screen w/ cloud and press any key to continue.
             # ----------------------------------------------------
@@ -73,4 +76,4 @@ def start_menu_loop():
                     direction = 'down'
             pygame.display.update() # draws the surface object to the screen/window
             fpsClock.tick(FPS)
-            press_any_key()
+start_menu_loop()
