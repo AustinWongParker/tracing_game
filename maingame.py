@@ -27,7 +27,7 @@ TO-DO:
 import pygame, sys
 from pygame.locals import*
 import time
-#import start_menu as SM
+import start_menu as SM
 
 pygame.init()
 
@@ -53,7 +53,7 @@ def gameLoop():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            #SM.start_menu_loop()
+            SM.start_menu_loop()
             screen.blit(beach_background, (0,0))
             pygame.display.update() # draws the surface object to the screen/window
             fpsClock.tick(FPS)
