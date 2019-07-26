@@ -22,6 +22,10 @@ TO-DO:
     c. animated drawing that will be slow enough for the user to see
         - last ~ 3 seconds after drawing is complete then disappear
 
+Shapes on screen (in-depth)
+    - mouse press event triggers drawing on the screen
+    - animation will need to be a sprite or bliting surfaces together
+
 '''
 
 import pygame, sys
@@ -37,33 +41,35 @@ pygame.display.set_caption('Tracing Game')
 FPS = 30
 fpsClock = pygame.time.Clock()
 
-def show_start_menu(self):
-    pass
-
+# Pygame colors
+BLACK = (0,0,0)
 
 beach_background = pygame.image.load('beach.jpg')
 beach_background = pygame.transform.scale(beach_background, (800, 600))
+
+# Shapes appearing on Screen
+shape_square = pygame.Surface((200,100))
+shape_square.fill((0,0,0))
+
+# Start Menu run
+globals.initialize()
+globals.menu_status = True
+SM.start_menu_loop()
 
 ###########################################################
 #                      GAME LOOP                          #
 ###########################################################
 
-globals.initialize()
-globals.menu_status = True
-SM.start_menu_loop()
-
 def gameLoop():
     while True:
-        for event in pygame.event.get():
+        for event in pygame.event.get(): # This handles the events
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
             screen.blit(beach_background, (0,0))
+            screen.blit(shape_square, (300,250))
             pygame.display.update() # draws the surface object to the screen/window
             fpsClock.tick(FPS)
 
-
-
-gameLoop()
-
-#if __name__ == '__main__':
+if __name__ == '__main__':
+    gameLoop()
